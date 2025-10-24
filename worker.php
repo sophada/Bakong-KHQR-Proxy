@@ -1,7 +1,13 @@
 <?php
-$reqData = ['md5' => '25afa475ac729afbe4d79883a9aafb92']; // Replace the md5 to check
+$proxyUrl = 'https://khqr.sophada.com/';
 
-$ch = curl_init('https://khqr.sophada.com/');
+$single = '274e69f1e1807ff9df1e61dc8f7a5e79';
+$bulk = '8277e0910d750195b448797616e091ad:e300e2a081762cbe14a31fdd467b41e5:d926d7bb9ccf46fc04a61bd65d87b9b3'; // Bulk split by ':' with a limit of 10 per request
+
+
+$reqData = ['md5' => $bulk];
+
+$ch = curl_init($proxyUrl);
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST => true,
@@ -21,15 +27,20 @@ curl_setopt_array($ch, [
     ],
     CURLOPT_TIMEOUT => 30,
     CURLOPT_ENCODING => '',
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0
+    CURLOPT_FOLLOWLOCATION => true
 ]);
+
 $response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
 if (curl_errno($ch)) {
-    echo json_encode(['error' => curl_error($ch)]);
+    echo json_encode(['error' => curl_error($ch), 'code' => curl_errno($ch)]);
     curl_close($ch);
     exit(1);
 }
+
 curl_close($ch);
+
+header('Content-Type: application/json');
+http_response_code($httpCode);
 echo $response;
-?>
