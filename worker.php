@@ -1,5 +1,5 @@
 <?php
-$proxyUrl = 'https://khqr.sophada.com/';
+$proxyUrl = 'https://www.s-server.ltd/khqr/';
 
 $single = '274e69f1e1807ff9df1e61dc8f7a5e79';
 $bulk = '8277e0910d750195b448797616e091ad:e300e2a081762cbe14a31fdd467b41e5:d926d7bb9ccf46fc04a61bd65d87b9b3'; // Bulk split by ':' with a limit of 10 per request
